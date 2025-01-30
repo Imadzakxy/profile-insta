@@ -1,0 +1,137 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "poppins",sans-serif;
+}
+
+.page , html{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, black,gray,black);
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 0;
+}
+
+.box{
+    min-height: 450px;
+    min-width: 300px;
+    border-radius: 15px;
+    background: black;
+    background-size: cover;
+    box-shadow: rgba(255, 255, 255, 0.25) 0px 54px 55px, rgba(255, 255, 255, 0.25) 0px -12px 30px, rgba(255, 255, 255, 0.25) 0px 4px 6px, rgba(255, 255, 255, 0.25) 0px 12px 13px, rgba(255, 255, 255, 0.25) 0px -3px 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.baniere{
+    width: 100%;
+    height: 100px;
+    background: url("./baniere.jpg");
+    border-radius: 15px 15px 0px 0px;
+    background-size: cover;
+}
+
+.baniere img{
+    padding: 7px;
+}
+
+.content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.prof-pic {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    border: 4px solid black;
+    background: url("./taki.jpg");
+    background-size: cover;
+    z-index: 1;
+    margin-top: calc((75px/2)*-1);
+    margin-bottom: 10px;
+}
+
+.info{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: fit-content;
+    height: fit-content;
+    margin-bottom: 35px;
+}
+
+.info span{
+    font-size: 20px;
+    color: rgb(255, 255, 255);
+    margin-bottom: 5px;
+}
+
+.info .cont{
+    font-size: 15px;
+    color: rgb(97, 95, 95);
+}
+
+.bot{
+    background-color: transparent;
+    color: #ffffff;
+    margin: 0%;
+    padding: 7px;
+    border: 1px solid white;
+    font-size: 20px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.bot:hover{
+    background-color: white;
+    color: black;
+}
+
+.inf{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-around;
+    width: fit-content;
+    gap: 20px;
+    flex-grow: 1;
+    margin-bottom: 30px;
+}
+
+.inf div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 120px;
+}
+
+.inf span{  
+    font-size: 17px;
+    color: #ffffff;
+}
+
+.inf .mots{
+    font-size: 15px;
+    color: rgb(97, 95, 95);
+}
+
+.inf div:nth-child(2){
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+}
+
+@media (max-width:600px){
+    .box{
+        width: 85%;
+    }
+    .inf div{
+        min-width: 80px;
+    }
+}
