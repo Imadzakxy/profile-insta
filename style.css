@@ -122,8 +122,8 @@
 }
 
 .inf div:nth-child(2){
-    border-left: 1px solid white;
-    border-right: 1px solid white;
+    border-left: 1px solid rgb(94, 91, 91);
+    border-right: 1px solid rgb(94, 91, 91);
 }
 
 @media (max-width:600px){
