@@ -30,7 +30,7 @@
 .baniere{
     width: 100%;
     height: 100px;
-    background: url("./baniere.jpg");
+    background: url("../public/baniere.jpg");
     border-radius: 15px 15px 0px 0px;
     background-size: cover;
 }
@@ -51,7 +51,7 @@
     width: 100px;
     border-radius: 50%;
     border: 4px solid black;
-    background: url("./taki.jpg");
+    background: url("../public/taki.jpg");
     background-size: cover;
     z-index: 1;
     margin-top: calc((75px/2)*-1);

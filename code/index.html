@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="style.css" type="text/css" rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="32x32" href="../public/toxic_icon.png">
+    <title>imad.zak.xy</title>
+  </head>
+  <body>
+    <div class="page">
+      <div class="box">
+        <div class="baniere">
+          <img src="../public/logo.png" alt="icone" width="20" height="20">
+        </div>
+
+        <div class="content">
+          <div class="prof-pic"></div>
+
+          <div class="info">
+            <span id="username">Chargement...</span>
+            <span class="cont">Alger</span>
+          </div>
+
+          <div>
+            <a href="https://www.instagram.com/imad.zak.xy/"><button class="bot">view profile</button></a>
+          </div>
+          
+          <div class="inf">
+            <div>
+              <span id="followers-count">...</span>
+              <span class="mots">Followers</span>
+            </div>
+            <div>
+              <span id="following-count">...</span>
+              <span class="mots">Abonnements</span>
+            </div>
+            <div>
+              <span id="story-count">...</span>
+              <span class="mots">Stories</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // ==================== TOKENS ====================
+      const TOKEN_IGAA = "IGAAiZCN41ymk9BZAFlYVDkweGxqMDVoWjZAOUWtmYlJidGh0Q2VUVWtzNm82Y01hNVNtOUZAFWW9jNXgzdXVDT2J0RXo1cEg3aWdkOXpIVUc2emFCbU9lVHN4OTdwWUlMYld0R21rX0NhREdzNGh0b2J0RFhGNzVDOUtJMVQ3YlJGNAZDZD";
+      const TOKEN_EAA = "EAAOgrSL9PJ4BRich90ZBRVoInfeVlf8lflE62zOP97uJP0LDku6tMYxh7eixdKN1QStTGxfKkBpY42Lh4GlFbAZBKsTZAeniqNhjRzZBUNPttMwtiNKglBY1vHB7BznWdZBAxCXwicfG6KAAq8ZAACsRZC03N7ZB8xwsSjvhazNIIzJzKsCJmTxj1QlMDserTG9GzsLGzpMD4AIxElSeZCZA8xNvqXo1PqVh2KUZAiK73svUUWNfHsl0Pkp7tSiHD3wxyKchTRdAO5MuKvSbYeGZB4ZBAs3Ts";
+      
+      // TON VRAI INSTAGRAM BUSINESS ID
+      const INSTA_BUSINESS_ID = "17841431532867544";
+
+      // ==================== 1. FOLLOWERS + ABONNEMENTS (IGAA) ====================
+      fetch(`https://graph.instagram.com/v25.0/me?fields=id,username,followers_count,follows_count&access_token=${TOKEN_IGAA}`)
+        .then(reponse => reponse.json())
+        .then(donnees => {
+          if (donnees.error) {
+            console.error("Erreur API IGAA:", donnees.error);
+            document.getElementById("username").innerHTML = "Erreur";
+            return;
+          }
+          
+          if (donnees.username) document.getElementById("username").innerHTML = donnees.username;
+          if (donnees.followers_count) document.getElementById("followers-count").innerHTML = donnees.followers_count.toLocaleString();
+          if (donnees.follows_count) document.getElementById("following-count").innerHTML = donnees.follows_count.toLocaleString();
+        })
+        .catch(erreur => {
+          console.error("Erreur:", erreur);
+          document.getElementById("followers-count").innerHTML = "Erreur";
+        });
+
+      // ==================== 2. STORIES (EAA) ====================
+      fetch(`https://graph.facebook.com/v25.0/${INSTA_BUSINESS_ID}/stories?fields=id&access_token=${TOKEN_EAA}`)
+        .then(r => r.json())
+        .then(data => {
+          if (data.error) {
+            console.error("Erreur API EAA:", data.error);
+            document.getElementById("story-count").innerHTML = "erreur";
+            return;
+          }
+          if (data.data && data.data.length > 0) {
+            document.getElementById("story-count").innerHTML = data.data.length;
+          } else {
+            document.getElementById("story-count").innerHTML = "0";
+          }
+        })
+        .catch(err => {
+          console.error("Erreur stories:", err);
+          document.getElementById("story-count").innerHTML = "erreur";
+        });
+    </script>
+  </body>
+</html>

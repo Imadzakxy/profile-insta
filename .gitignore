@@ -1,0 +1,31 @@
+# Dependencies
+node_modules/
+package-lock.json
+package.json
+
+# Environment variables
+.env
+*.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Build output
+dist/
+build/
+
+# Secrets (NEVER commit these!)
+secrets.json
+tokens.json
+credentials.json
