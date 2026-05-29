@@ -15,17 +15,15 @@
         </div>
 
         <div class="content">
-          <div class="prof-pic"></div>
+          <div class="prof-pic">
+            <img id="profile-picture" src="">
+          </div>
 
           <div class="info">
             <span id="username">Chargement...</span>
             <span class="cont">Alger</span>
           </div>
 
-          <div>
-            <a href="https://www.instagram.com/imad.zak.xy/"><button class="bot">view profile</button></a>
-          </div>
-          
           <div class="inf">
             <div>
               <span id="following-count">...</span>
@@ -40,56 +38,18 @@
               <span class="mots">Stories</span>
             </div>
           </div>
+          <div class="buttons">
+            <a href="#">
+                <button id="bot1" class="bot">follow</button>
+            </a>
+            <a id="dm-link" href="#">
+              <button id="bot2" class="bot">message</button>
+            </a>
+          </div>
+
         </div>
       </div>
     </div>
-
-    <script>
-      // ==================== TOKENS ====================
-      const TOKEN_IGAA = "IGAAiZCN41ymk9BZAFlYVDkweGxqMDVoWjZAOUWtmYlJidGh0Q2VUVWtzNm82Y01hNVNtOUZAFWW9jNXgzdXVDT2J0RXo1cEg3aWdkOXpIVUc2emFCbU9lVHN4OTdwWUlMYld0R21rX0NhREdzNGh0b2J0RFhGNzVDOUtJMVQ3YlJGNAZDZD";
-      const TOKEN_EAA = "EAAOgrSL9PJ4BRqnrAIJ8ihrN7VNcZAKmYo0ZA71QZAKow86zcGrZBriqa94ZCnSms7I2zMqWhrgIbxCAUv58lTMFxFZBRnyjdeOZBkZBZAJWdHZCHampy33JYwoA9bFnjTKkltBoJ389E9mZAAV8ZC1stxrtYxSiVZCKNlZBCqzZB0h4358Eq2T0LUUJuPAg01eprS2MY2yZBp9HL1wIg1pYGh5Ccy5NdZCKcn8BL4M7lZBfki";
-      
-      // TON VRAI INSTAGRAM BUSINESS ID
-      const INSTA_BUSINESS_ID = "17841431532867544";
-
-      // ==================== 1. FOLLOWERS + ABONNEMENTS (IGAA) ====================
-      fetch(`https://graph.instagram.com/v25.0/me?fields=id,username,followers_count,follows_count&access_token=${TOKEN_IGAA}`)
-        .then(reponse => reponse.json())
-        .then(donnees => {
-          if (donnees.error) {
-            console.error("Erreur API IGAA:", donnees.error);
-            document.getElementById("username").innerHTML = "Erreur";
-            return;
-          }
-          
-          if (donnees.username) document.getElementById("username").innerHTML = donnees.username;
-          if (donnees.followers_count) document.getElementById("followers-count").innerHTML = donnees.followers_count.toLocaleString();
-          if (donnees.follows_count) document.getElementById("following-count").innerHTML = donnees.follows_count.toLocaleString();
-        })
-        .catch(erreur => {
-          console.error("Erreur:", erreur);
-          document.getElementById("followers-count").innerHTML = "Erreur";
-        });
-
-      // ==================== 2. STORIES (EAA) ====================
-      fetch(`https://graph.facebook.com/v25.0/${INSTA_BUSINESS_ID}/stories?fields=id&access_token=${TOKEN_EAA}`)
-        .then(r => r.json())
-        .then(data => {
-          if (data.error) {
-            console.error("Erreur API EAA:", data.error);
-            document.getElementById("story-count").innerHTML = "erreur";
-            return;
-          }
-          if (data.data && data.data.length > 0) {
-            document.getElementById("story-count").innerHTML = data.data.length;
-          } else {
-            document.getElementById("story-count").innerHTML = "0";
-          }
-        })
-        .catch(err => {
-          console.error("Erreur stories:", err);
-          document.getElementById("story-count").innerHTML = "erreur";
-        });
-    </script>
+    <script src="script.js"></script>
   </body>
 </html>
