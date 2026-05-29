@@ -48,24 +48,35 @@ fetch(`https://graph.facebook.com/v25.0/${INSTA_BUSINESS_ID}/stories?fields=id&a
 if (donnees.username) {
     document.getElementById("username").innerHTML = donnees.username;
     
-    // Mettre à jour le lien du bouton message (DM)
+    // Modifier le lien du bouton message
     const dmLink = document.getElementById("dm-link");
     if (dmLink) {
-        dmLink.href = `https://www.instagram.com/direct/t/${donnees.username}`;
+        dmLink.onclick = () => {
+            window.open(`https://www.instagram.com/direct/t/${donnees.username}`, "_blank");
+        };
     }
     
-    // Mettre à jour le lien du bouton follow (profil)
+    // Modifier le lien du bouton follow
     const followLink = document.getElementById("follow-link");
     if (followLink) {
-        followLink.href = `https://www.instagram.com/${donnees.username}`;
+        followLink.onclick = () => {
+            window.open(`https://www.instagram.com/${donnees.username}`, "_blank");
+        };
     }
 }
 
-// Afficher la photo de profil (solution alternative)
-const profPic = document.querySelector(".prof-pic");
-if (profPic) {
-    // Utilise directement l'URL de ton image hébergée
-    profPic.style.backgroundImage = "url('./public/taki.jpg')";
-    profPic.style.backgroundSize = "cover";
-    profPic.style.backgroundPosition = "center";
-}
+// Récupérer la photo de profil avec le token EAA
+//ca na pas marcher prsq c un lien pour telecharger limage
+/*
+fetch(`https://graph.facebook.com/v25.0/me?fields=picture{url}&access_token=${TOKEN_EAA}`)
+    .then(r => r.json())
+    .then(data => {
+        if (data.picture && data.picture.data && data.picture.data.url) {
+            const photoUrl = data.picture.data.url;
+            document.querySelector(".prof-pic").style.backgroundImage = `url(${photoUrl})`;
+            document.querySelector(".prof-pic").style.backgroundSize = "cover";
+            document.querySelector(".prof-pic").style.backgroundPosition = "center";
+        }
+    })
+    .catch(err => console.error("Erreur photo:", err));
+*/

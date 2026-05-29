@@ -8,9 +8,10 @@
     width: 100vw;
     height: 100vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, black,gray,black);
+    background: linear-gradient(135deg, black,rgb(62, 61, 61),black);
     background-size: cover;
     background-repeat: no-repeat;
     margin: 0;
@@ -50,16 +51,23 @@
     width: 100px;
     border-radius: 50%;
     border: 4px solid black;
+    background: url("./public/taki.jpg");
+    background-size: cover;
+    background-position: center;
+    margin-top: calc((75px/2)*-1);
+    margin-bottom: 10px;
+}
+/* .prof-pic {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    border: 4px solid black;
+    background: url("./public/taki.jpg");
+    background-size: cover;
     z-index: 1;
     margin-top: calc((75px/2)*-1);
     margin-bottom: 10px;
-    overflow: hidden;
-}
-.prof-pic img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+} */
 
 .info{
     display: flex;
@@ -80,9 +88,10 @@
 }
 
 .inf{
+    height: 20%;
     display: flex;
     flex-direction: row;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-around;
     width: fit-content;
     gap: 20px;
@@ -113,34 +122,92 @@
     align-items: center;
     justify-content: space-between;
 }
-.bot{
+.bot {
     width: 100px;
     background-color: transparent;
     color: #ffffff;
-    margin: 0%;
-    padding: 7px;
+    margin: 0;
+    padding: 10px 0;
     border: 1px solid white;
-    font-size: 17px;
-    border-radius: 15px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 30px;
     cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: system-ui, -apple-system, sans-serif;
 }
-#bot1{
+#bot1 {
     background-color: white;
     color: black;
 }
-#bot2{
+#bot2 {
     background-color: transparent;
     color: white;
 }
-
-#bot1:hover{
+#bot1:hover {
     background-color: rgb(56, 55, 55);
     color: white;
+    transform: translateY(-2px);
 }
-#bot2:hover{
+#bot2:hover {
     background-color: rgb(187, 184, 184);
     color: black;
+    transform: translateY(-2px);
 }
+.bot:active {
+    transform: scale(0.96);
+}
+
+.contact{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    margin-top: 30px;
+}
+.contact-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 30px;
+    text-decoration: none;
+    color: #ffffff;
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+.contact-btn .icon {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.3s ease;
+}
+#mail-btn:hover {
+    background: #ea4335;
+    border-color: #ea4335;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(234, 67, 53, 0.3);
+}
+#mail-btn:hover .icon {
+    transform: scale(1.1);
+}
+#github-btn:hover {
+    background: #333333;
+    border-color: #333333;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(51, 51, 51, 0.3);
+}
+#github-btn:hover .icon {
+    transform: scale(1.1);
+}
+.contact-btn:hover {
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
 
 @media (max-width:600px){
     .box{
