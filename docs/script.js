@@ -79,3 +79,22 @@ fetch(`https://graph.facebook.com/v25.0/me?fields=picture{url}&access_token=${TO
     })
     .catch(err => console.error("Erreur photo:", err));
 */
+
+// === MOUSE SPOTLIGHT EFFECT ===
+document.addEventListener('DOMContentLoaded', () => {
+    const page = document.querySelector('.page');
+    
+    if (page) {
+        document.addEventListener('mousemove', (e) => {
+            // Get the mouse position relative to the viewport
+            const x = e.clientX;
+            const y = e.clientY;
+            
+            // Update the CSS variables on the .page element
+            page.style.setProperty('--x', `${x}px`);
+            page.style.setProperty('--y', `${y}px`);
+        });
+    }
+});
+
+//==============================================

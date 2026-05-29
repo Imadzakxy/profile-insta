@@ -11,17 +11,29 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #0e0e0e, #262525, #0e0e0e);
-    background-size: 200% 200%;
-    animation: gradientShift 5s ease infinite;
-    background-size: cover;
-    background-repeat: no-repeat;
     margin: 0;
+    position: relative;
+    --mouse-x: 50%;
+    --mouse-y: 50%;
 }
-@keyframes gradientShift {
-    0% { background-position: 0% 0%; }
-    50% { background-position: 100% 100%; }
-    100% { background-position: 0% 0%; }
+
+/* Glow souris - effet spotlight */
+.page::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        circle at var(--mouse-x) var(--mouse-y),
+        rgba(218, 216, 216, 0.15) 1%,
+        rgba(60, 59, 59, 0.05) 50px,
+        transparent 100px
+    );
+    pointer-events: none;
+    z-index: -1;
+    transition: background 0.1s ease;
 }
 
 .box{
@@ -35,6 +47,8 @@
             0 5px 15px rgba(255, 255, 255, 0.1);
     display: flex;
     flex-direction: column;
+    position: relative;
+    z-index: 1;
 }
 
 .baniere{
@@ -194,8 +208,8 @@
     transform: scale(1.1);
 }
 #github-btn:hover {
-    background: #333333;
-    border-color: #333333;
+    background: #161616;
+    border-color: #000000;
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(51, 51, 51, 0.3);
 }
