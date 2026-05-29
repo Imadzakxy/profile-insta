@@ -1,11 +1,11 @@
 // === TOKENS ===
 const TOKEN_IGAA = "IGAAiZCN41ymk9BZAFlYVDkweGxqMDVoWjZAOUWtmYlJidGh0Q2VUVWtzNm82Y01hNVNtOUZAFWW9jNXgzdXVDT2J0RXo1cEg3aWdkOXpIVUc2emFCbU9lVHN4OTdwWUlMYld0R21rX0NhREdzNGh0b2J0RFhGNzVDOUtJMVQ3YlJGNAZDZD";
-const TOKEN_EAA = "EAAOgrSL9PJ4BRruvyooG9rfWDHAQrw4wKIleaV1hv8BqxtrnTVNdQTdBZAOzNi2DPbPxH2P0yBSGyBsZBPjfsw158aGldgYZBZCOcOzFwmNdKmRrJKZBLM9g5WxJx4KOeQ1ZACLA66glMZAEDMn0ZCgt0AMd2FZAfYaQt7TQAJurPQVmN6tBtPqSTnq0YnoERuOnobqGENpIeAz5N1eQaS8gsa3UCZBSBFLjrvpy4D";
+const TOKEN_EAA = "EAAOgrSL9PJ4BRuHcBkFZBKjReOLjmWzv77qngckrahgZA4dNZA3eulx8oiuA9VZCG7sQsbyR4A3fmhxO7Ok5ZATbnyvgNyk3MmGNDtTT4ed7cqsnnOSDcY9nWZCy4ogXYuZACvZCZCbq2lX3kXYgrEVY9ORTT2ODT7cQLGOLzgq5ZBkWHqpRlkMLSx0zmcBG4fRVaH";
 
 // TON VRAI INSTAGRAM BUSINESS ID
 const INSTA_BUSINESS_ID = "17841431532867544";
 
-// === 1. FOLLOWERS + ABONNEMENTS (IGAA) ===
+// === 1. Username + Followers + Following (IGAA) ===
 fetch(`https://graph.instagram.com/v25.0/me?fields=id,username,followers_count,follows_count&access_token=${TOKEN_IGAA}`)
 .then(reponse => reponse.json())
 .then(donnees => {
