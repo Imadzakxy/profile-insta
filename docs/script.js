@@ -45,25 +45,24 @@ fetch(`https://graph.facebook.com/v25.0/${INSTA_BUSINESS_ID}/stories?fields=id&a
 });
 
 // Récupérer le nom d'utilisateur et mettre à jour les liens des boutons
-if (donnees.username) {
-    document.getElementById("username").innerHTML = donnees.username;
-    
-    // Modifier le lien du bouton message
-    const dmLink = document.getElementById("dm-link");
-    if (dmLink) {
-        dmLink.onclick = () => {
-            window.open(`https://www.instagram.com/direct/t/${donnees.username}`, "_blank");
-        };
+document.addEventListener('DOMContentLoaded', () => {
+    const followBtn = document.getElementById('bot1');
+    const messageBtn = document.getElementById('bot2');
+
+    if (followBtn) {
+        followBtn.addEventListener('click', () => {
+            // Replace with your desired URL
+            window.open('https://instagram.com/imad.zak.xy', '_blank');
+        });
     }
-    
-    // Modifier le lien du bouton follow
-    const followLink = document.getElementById("follow-link");
-    if (followLink) {
-        followLink.onclick = () => {
-            window.open(`https://www.instagram.com/${donnees.username}`, "_blank");
-        };
+
+    if (messageBtn) {
+        messageBtn.addEventListener('click', () => {
+            // Replace with your desired URL
+            window.open('https://instagram.com/direct/t/imad.zak.xy', '_blank');
+        });
     }
-}
+});
 
 // Récupérer la photo de profil avec le token EAA
 //ca na pas marcher prsq c un lien pour telecharger limage
