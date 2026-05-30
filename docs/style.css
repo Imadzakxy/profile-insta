@@ -221,11 +221,114 @@
 }
 
 
+/* ===== GALAXY BACKGROUND ===== */
+body {
+    min-height: 100vh;
+    background: #050505;
+    overflow: hidden;
+}
+
+/* Conteneur galaxie - fond noir profond */
+.galaxy-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    background: radial-gradient(ellipse at center, 
+        #3d3c3c 0%, 
+        #222121 30%, 
+        #000000 100%);
+    overflow: hidden;
+}
+
+/* Noyau central très brillant - optimisé */
+.galaxy-core {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 12px;
+    height: 12px;
+    margin-top: -6px;
+    margin-left: -6px;
+    background: radial-gradient(circle, 
+        rgba(255, 255, 255, 1) 0%, 
+        rgba(220, 220, 220, 0.9) 30%, 
+        rgba(180, 180, 180, 0.7) 60%, 
+        transparent 100%);
+    border-radius: 50%;
+    box-shadow: 
+        0 0 40px rgba(255, 255, 255, 0.9),
+        0 0 80px rgba(200, 200, 200, 0.5);
+    animation: pulse 3s ease-in-out infinite;
+}
+
+/* Points spirale - étoiles réalistes */
+.spiral-point {
+    position: absolute;
+    border-radius: 50%;
+    animation: twinkle 2s ease-in-out infinite;
+    will-change: transform;
+}
+
+/* Animations optimisées */
+@keyframes pulse {
+    0%, 100% { 
+        transform: scale(1); 
+        opacity: 0.9;
+        box-shadow: 0 0 40px rgba(182, 181, 181, 0.9), 0 0 80px rgba(126, 121, 121, 0.5);
+    }
+    50% { 
+        transform: scale(1.4); 
+        opacity: 1;
+        box-shadow: 0 0 60px rgba(255, 255, 255, 1), 0 0 120px rgba(220, 220, 220, 0.7);
+    }
+}
+
+@keyframes twinkle {
+    0%, 100% { 
+        opacity: 0.4; 
+        transform: scale(1);
+    }
+    50% { 
+        opacity: 1; 
+        transform: scale(1.2);
+    }
+}
+
+/* MOBILE OPTIMIZATIONS */
+@media (max-width: 768px) {
+    .galaxy-core {
+        width: 8px;
+        height: 8px;
+        margin-top: -4px;
+        margin-left: -4px;
+    }
+    
+    .spiral-point {
+        max-width: 3px;
+        max-height: 3px;
+    }
+}
+
+/* Réduire animations sur appareils basse performance */
+@media (prefers-reduced-motion: reduce) {
+    .spiral-point,
+    .galaxy-core {
+        animation: none !important;
+    }
+}
+
 @media (max-width:600px){
     .box{
         width: 85%;
     }
     .inf div{
         min-width: 80px;
+    }
+    .baniere img{
+        padding: 7px;
+        object-fit: cover;
     }
 }
