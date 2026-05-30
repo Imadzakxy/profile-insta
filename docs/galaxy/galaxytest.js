@@ -10,7 +10,7 @@ const config = {
 
     // Ajouts : proportion d'aléatoire et vitesse radiale (px/s)
     randomness: 0.5,
-    radialSpeed: 20,   // px par seconde vers le centre — réduire pour des étoiles plus lentes
+    radialSpeed: 15,   // px par seconde vers le centre — réduire pour des étoiles plus lentes
     minRadius: 6        // rayon minimal pour considérer "arrivé au centre"
 };
 
