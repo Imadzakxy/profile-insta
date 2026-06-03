@@ -9,134 +9,139 @@ const CACHE_DURATION = {
     stories: 120000    // 2 minutes pour stories (mises à jour fréquentes)
 };
 
-// === CACHE HELPERS ===
-function getCacheKey(type) {
-    return `insta_${type}`;
-}
+let usernameEl;
+let followersCountEl;
+let followingCountEl;
+let storyCountEl;
+let pageEl;
 
-function getFromCache(type) {
+const getCacheKey = (type) => `insta_${type}`;
+
+const getFromCache = (type) => {
     const cached = localStorage.getItem(getCacheKey(type));
     if (!cached) return null;
-    
-    const data = JSON.parse(cached);
-    const duration = CACHE_DURATION[type] || CACHE_DURATION.profile;
-    
-    if (Date.now() - data.timestamp > duration) {
+
+    try {
+        const { value, timestamp } = JSON.parse(cached);
+        const duration = CACHE_DURATION[type] ?? CACHE_DURATION.profile;
+
+        if (Date.now() - timestamp > duration) {
+            localStorage.removeItem(getCacheKey(type));
+            return null;
+        }
+
+        return value;
+    } catch {
         localStorage.removeItem(getCacheKey(type));
         return null;
     }
-    return data.value;
-}
+};
 
-function saveToCache(type, value) {
-    localStorage.setItem(getCacheKey(type), JSON.stringify({
-        value: value,
-        timestamp: Date.now()
-    }));
-}
+const saveToCache = (type, value) => {
+    localStorage.setItem(getCacheKey(type), JSON.stringify({ value, timestamp: Date.now() }));
+};
 
-// === 1. Username + Followers + Following (IGAA) - AVEC CACHE ===
-function fetchInstagramData() {
+const fetchJson = async (url) => {
+    const response = await fetch(url);
+    if (!response.ok) {
+        throw new Error(`Fetch failed: ${response.status}`);
+    }
+    return response.json();
+};
+
+const openExternal = (url) => window.open(url, '_blank', 'noopener');
+
+const displayProfileData = (data) => {
+    if (data.username) usernameEl.textContent = data.username;
+    if (typeof data.followers_count === 'number') followersCountEl.textContent = data.followers_count.toLocaleString();
+    if (typeof data.follows_count === 'number') followingCountEl.textContent = data.follows_count.toLocaleString();
+};
+
+const displayStoriesData = (data) => {
+    storyCountEl.textContent = String(data.data?.length ?? 0);
+};
+
+const fetchInstagramData = async () => {
     const cached = getFromCache('profile');
     if (cached) {
         displayProfileData(cached);
         return;
     }
 
-    fetch(`https://graph.instagram.com/v25.0/me?fields=id,username,followers_count,follows_count&access_token=${TOKEN_IGAA}`)
-    .then(reponse => reponse.json())
-    .then(donnees => {
-        if (donnees.error) {
-            console.error("Erreur API IGAA:", donnees.error);
-            document.getElementById("username").innerHTML = "Erreur";
+    try {
+        const url = `https://graph.instagram.com/v25.0/me?fields=id,username,followers_count,follows_count&access_token=${TOKEN_IGAA}`;
+        const data = await fetchJson(url);
+
+        if (data.error) {
+            console.error('Erreur API IGAA:', data.error);
+            usernameEl.textContent = 'Erreur';
             return;
         }
-        saveToCache('profile', donnees);
-        displayProfileData(donnees);
-    })
-    .catch(erreur => {
-        console.error("Erreur:", erreur);
-        document.getElementById("followers-count").innerHTML = "Erreur";
-    });
-}
 
-function displayProfileData(donnees) {
-    if (donnees.username) document.getElementById("username").innerHTML = donnees.username;
-    if (donnees.followers_count) document.getElementById("followers-count").innerHTML = donnees.followers_count.toLocaleString();
-    if (donnees.follows_count) document.getElementById("following-count").innerHTML = donnees.follows_count.toLocaleString();
-}
+        saveToCache('profile', data);
+        displayProfileData(data);
+    } catch (error) {
+        console.error('Erreur:', error);
+        followersCountEl.textContent = 'Erreur';
+    }
+};
 
-// === 2. STORIES (EAA) - AVEC CACHE ===
-function fetchStoriesData() {
+const fetchStoriesData = async () => {
     const cached = getFromCache('stories');
     if (cached) {
         displayStoriesData(cached);
         return;
     }
 
-    fetch(`https://graph.facebook.com/v25.0/${INSTA_BUSINESS_ID}/stories?fields=id&access_token=${TOKEN_EAA}`)
-    .then(r => r.json())
-    .then(data => {
+    try {
+        const url = `https://graph.facebook.com/v25.0/${INSTA_BUSINESS_ID}/stories?fields=id&access_token=${TOKEN_EAA}`;
+        const data = await fetchJson(url);
+
         if (data.error) {
-            console.error("Erreur API EAA:", data.error);
-            document.getElementById("story-count").innerHTML = "erreur";
+            console.error('Erreur API EAA:', data.error);
+            storyCountEl.textContent = 'erreur';
             return;
         }
+
         saveToCache('stories', data);
         displayStoriesData(data);
-    })
-    .catch(err => {
-        console.error("Erreur stories:", err);
-        document.getElementById("story-count").innerHTML = "erreur";
-    });
-}
-
-function displayStoriesData(data) {
-    if (data.data && data.data.length > 0) {
-        document.getElementById("story-count").innerHTML = data.data.length;
-    } else {
-        document.getElementById("story-count").innerHTML = "0";
+    } catch (error) {
+        console.error('Erreur stories:', error);
+        storyCountEl.textContent = 'erreur';
     }
-}
+};
 
-// === BUTTONS + API CALLS ===
-document.addEventListener('DOMContentLoaded', () => {
-    // Fetch data avec cache
+const initPage = () => {
+    usernameEl = document.getElementById('username');
+    followersCountEl = document.getElementById('followers-count');
+    followingCountEl = document.getElementById('following-count');
+    storyCountEl = document.getElementById('story-count');
+    pageEl = document.querySelector('.page');
+
     fetchInstagramData();
     fetchStoriesData();
 
-    // Button listeners
-    const followBtn = document.getElementById('bot1');
-    const messageBtn = document.getElementById('bot2');
-    const usernameElement = document.getElementById('username');
+    document.getElementById('bot1')?.addEventListener('click', () => {
+        openExternal(`https://instagram.com/${usernameEl.textContent || 'imad.zak.xy'}`);
+    }, { passive: true });
 
-    if (followBtn) {
-        followBtn.addEventListener('click', () => {
-            const username = usernameElement.textContent || 'imad.zak.xy';
-            window.open(`https://instagram.com/${username}`, '_blank');
-        }, { passive: true });
-    }
+    document.getElementById('bot2')?.addEventListener('click', () => {
+        openExternal(`https://instagram.com/direct/t/${usernameEl.textContent || 'imad.zak.xy'}`);
+    }, { passive: true });
 
-    if (messageBtn) {
-        messageBtn.addEventListener('click', () => {
-            const username = usernameElement.textContent || 'imad.zak.xy';
-            window.open(`https://instagram.com/direct/t/${username}`, '_blank');
-        }, { passive: true });
-    }
-
-    // Mouse spotlight effect - optimisé
-    const page = document.querySelector('.page');
-    if (page) {
+    if (pageEl) {
         let ticking = false;
         document.addEventListener('mousemove', (e) => {
             if (!ticking) {
                 requestAnimationFrame(() => {
-                    page.style.setProperty('--mouse-x', `${e.clientX}px`);
-                    page.style.setProperty('--mouse-y', `${e.clientY}px`);
+                    pageEl.style.setProperty('--mouse-x', `${e.clientX}px`);
+                    pageEl.style.setProperty('--mouse-y', `${e.clientY}px`);
                     ticking = false;
                 });
                 ticking = true;
             }
         }, { passive: true });
     }
-});
+};
+
+document.addEventListener('DOMContentLoaded', initPage);
